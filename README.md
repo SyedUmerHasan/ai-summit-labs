@@ -1,6 +1,6 @@
 # AI Summit Labs — Strands Agents
 
-Progressive hands-on labs from a single agent to multi-agent orchestration with observability.
+Progressive hands-on labs from a single agent to multi-agent orchestration, observability, and real-time voice.
 
 ## Prerequisites
 
@@ -41,6 +41,7 @@ python3 lab_01_first_agent/01_basic_agent.py
 | 03 | Agents as Tools | tech planner, user stories, sprint, proposal, meeting, incident, email, coding assistant |
 | 04 | Multi-Agent Orchestration | sequential workflow, resume screener, graph (code review, triage), swarm (call center) |
 | 05 | Observability | Langfuse tracing (auto-enabled for all labs) |
+| 06 | Voice & Realtime | Gemini Live (free), OpenAI Realtime (paid, smooth) |
 
 ## Model Config
 
@@ -75,3 +76,18 @@ set -Ux LANGFUSE_BASE_URL "http://localhost:3000"
 ```
 
 View traces at http://localhost:3000
+
+## Voice Agents (Lab 06)
+
+```bash
+# Free (Gemini Live) — requires GOOGLE_API_KEY
+python3 lab_06_voice/01_gemini_free.py
+
+# Paid, smooth audio (OpenAI Realtime ~$0.30/min) — requires OPENAI_API_KEY
+python3 lab_06_voice/02_openai_realtime.py
+```
+
+## Presentation
+
+Open `website/index.html` for the slide deck, or view live at:
+https://syedumerhasan.github.io/ai-summit-labs/

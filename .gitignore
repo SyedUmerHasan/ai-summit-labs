@@ -5,3 +5,5 @@ __pycache__/
 sessions/
 *.db
 .env
+mcp-lab/
+*.bak

@@ -1,6 +1,6 @@
 # AI Summit Labs — Strands Agents
 
-Progressive hands-on labs from a single agent to self-healing, self-learning AI systems.
+Progressive hands-on labs from a single agent to multi-agent orchestration with observability.
 
 ## Prerequisites
 
@@ -9,50 +9,69 @@ Progressive hands-on labs from a single agent to self-healing, self-learning AI 
 
 ## Quick Start
 
-### 1. Start Ollama
+### 1. Start infrastructure
 
 ```bash
 docker compose up -d
-docker exec ollama ollama pull qwen2.5:3b
+docker exec ollama ollama pull llama3.1
 ```
 
 ### 2. Set up Python environment
 
 ```bash
 python3 -m venv .venv
-source .venv/bin/activate
+source .venv/bin/activate        # bash/zsh
+source .venv/bin/activate.fish   # fish
+pip install -e .
 pip install -r requirements.txt
 ```
 
 ### 3. Run a lab
 
 ```bash
-PYTHONPATH=. python lab_01_first_agent/solution.py
+python3 lab_01_first_agent/01_basic_agent.py
 ```
 
 ## Labs
 
-| Lab | Pattern | Problem |
-|-----|---------|---------|
-| 01 | Single Agent + Tools | Research assistant |
-| 02 | State + Memory | Customer support bot |
-| 03 | Agents as Tools | Document review pipeline |
-| 04 | Workflow (SOP) | Employee onboarding DAG |
-| 05 | Graph (Routing) | IT helpdesk ticket router |
-| 06 | Swarm | Incident response team |
-| 07 | Agent-to-Agent (A2A) | Cross-team code review |
-| 08 | Observability & Evals | Measure and test agents |
-| 09 | Self-Healing | DevOps monitor + auto-recover |
-| 10 | Self-Learning | Memory extraction + improvement loop |
+| Lab | Pattern | Files |
+|-----|---------|-------|
+| 01 | Single Agent + Tools | basic, read, write, create, web search, web fetch |
+| 02 | State + Sessions | sessions, notes, todos, preferences, multi-user, full agent |
+| 03 | Agents as Tools | tech planner, user stories, sprint, proposal, meeting, incident, email, coding assistant |
+| 04 | Multi-Agent Orchestration | sequential workflow, resume screener, graph (code review, triage), swarm (call center) |
+| 05 | Observability | Langfuse tracing (auto-enabled for all labs) |
 
 ## Model Config
 
-All labs use `shared/model_config.py`. Override the model via env var:
+All labs use `shared/model_config.py`. Switch models via env var:
 
 ```bash
-# Default: Ollama qwen2.5:3b
-PYTHONPATH=. python lab_01_first_agent/solution.py
+# Default: Anthropic Claude
+python3 lab_01_first_agent/01_basic_agent.py
 
-# Use Bedrock instead
-MODEL_PROVIDER=bedrock PYTHONPATH=. python lab_01_first_agent/solution.py
+# Ollama local
+MODEL=ollama python3 lab_01_first_agent/01_basic_agent.py
+
+# AWS Bedrock
+MODEL=bedrock python3 lab_01_first_agent/01_basic_agent.py
 ```
+
+## Infrastructure
+
+| Service | Port | Purpose |
+|---------|------|---------|
+| Ollama | 11434 | Local LLM |
+| Langfuse | 3000 | Observability dashboard |
+
+## Observability
+
+All labs auto-trace to Langfuse when keys are set:
+
+```bash
+set -Ux LANGFUSE_PUBLIC_KEY "pk-lf-..."
+set -Ux LANGFUSE_SECRET_KEY "sk-lf-..."
+set -Ux LANGFUSE_BASE_URL "http://localhost:3000"
+```
+
+View traces at http://localhost:3000

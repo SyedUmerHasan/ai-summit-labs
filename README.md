@@ -77,6 +77,15 @@ set -Ux LANGFUSE_BASE_URL "http://localhost:3000"
 
 View traces at http://localhost:3000
 
+## API Keys
+
+| Provider | Get Key | Env Var |
+|----------|---------|---------|
+| Anthropic (Claude) | https://console.anthropic.com/settings/keys | `ANTHROPIC_API_KEY` |
+| OpenAI | https://platform.openai.com/api-keys | `OPENAI_API_KEY` |
+| Google (Gemini) | https://aistudio.google.com/apikey | `GOOGLE_API_KEY` |
+| ElevenLabs | https://elevenlabs.io/app/settings/api-keys | `ELEVENLABS_API_KEY` |
+
 ## Voice Agents (Lab 06)
 
 ```bash

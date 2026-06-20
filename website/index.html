@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Self-Healing AI Agents — AI Summit</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root { --r-background-color: #050510; --r-main-font: 'DM Sans', sans-serif; --r-heading-font: 'Space Grotesk', sans-serif; --r-main-color: #E2E8F0; --r-heading-color: #F8FAFC; --r-link-color: #22C55E; }
+        .reveal { font-family: var(--r-main-font); }
+        .reveal h1, .reveal h2, .reveal h3 { font-family: var(--r-heading-font); font-weight: 700; text-transform: none; }
+        .reveal h1 { font-size: 2.8em; }
+        .reveal h2 { font-size: 1.8em; margin-bottom: 0.5em; }
+        .reveal h3 { font-size: 1.2em; }
+        .gradient-text { background: linear-gradient(135deg, #22C55E, #06B6D4, #8B5CF6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .green { color: #22C55E; }
+        .cyan { color: #06B6D4; }
+        .purple { color: #8B5CF6; }
+        .orange { color: #F97316; }
+        .muted { color: #94A3B8; }
+        .small { font-size: 0.7em; }
+        .reveal .subtitle { color: #94A3B8; font-size: 0.85em; }
+        .reveal .tag { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.55em; margin: 3px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); }
+        .tag-green { border-color: rgba(34,197,94,0.3) !important; color: #22C55E !important; }
+        .tag-cyan { border-color: rgba(6,182,212,0.3) !important; color: #06B6D4 !important; }
+        .tag-purple { border-color: rgba(139,92,246,0.3) !important; color: #8B5CF6 !important; }
+        .tag-orange { border-color: rgba(249,115,22,0.3) !important; color: #F97316 !important; }
+        .code { font-family: 'JetBrains Mono', monospace; font-size: 0.42em; color: #22C55E; text-align: left; background: rgba(0,0,0,0.4); padding: 16px 20px; border-radius: 10px; border: 1px solid rgba(34,197,94,0.15); line-height: 1.5; white-space: pre; overflow: hidden; }
+        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; text-align: left; }
+        .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; text-align: left; }
+        .card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 20px; }
+        .card h3 { margin: 0 0 8px 0; }
+        .reveal section { text-align: center; }
+        .left { text-align: left !important; }
+        .reveal ul { list-style: none; padding: 0; margin: 0; }
+        .reveal ul li { margin-bottom: 8px; font-size: 0.8em; }
+        .reveal ul li::before { content: "→ "; color: #22C55E; font-weight: bold; }
+        .vs-table { width: 100%; font-size: 0.65em; border-collapse: collapse; }
+        .vs-table th { color: #22C55E; padding: 8px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .vs-table td { padding: 8px; border-bottom: 1px solid rgba(255,255,255,0.05); color: #94A3B8; }
+        .vs-table td:first-child { color: #E2E8F0; }
+        .lab-ref { font-size: 0.6em; color: #F97316; margin-top: 12px; }
+        .flow { font-family: 'JetBrains Mono', monospace; font-size: 0.7em; color: #06B6D4; }
+    </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+    <!-- 1: Title -->
+    <section>
+        <h1><span class="gradient-text">Self-Healing &<br>Self-Learning</span><br>AI Agents</h1>
+        <p class="subtitle">From LLM Chatbots to Autonomous Systems</p>
+        <br>
+        <p class="small muted">Syed Umer Hasan — SysDE @ Amazon | IEEE Senior Member | 11x Cloud Certified</p>
+    </section>
+
+    <!-- 2: About Me -->
+    <section>
+        <h2>About Me</h2>
+        <div class="two-col">
+            <div class="card">
+                <h3 class="green">Syed Umer Hasan</h3>
+                <ul>
+                    <li>System Development Engineer @ Amazon</li>
+                    <li>AI/ML in production — threat detection, automated remediation</li>
+                    <li>Author: "Mastering AWS"</li>
+                    <li>IEEE Senior Member</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3 class="cyan">Certifications</h3>
+                <p class="small muted">AWS Security Specialty, Solutions Architect, Developer, AI Practitioner, Cloud Practitioner, GCP Engineer, Azure Fundamentals, Terraform, Databricks x2, CompTIA Security+</p>
+                <br>
+                <p class="small">Co-founder: <span class="green">codeforgeeks.com</span></p>
+                <p class="small">Portfolio: <span class="cyan">syedumerhasan.dev</span></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3: The Vision -->
+    <section>
+        <h2>What We're Building Toward</h2>
+        <br>
+        <p style="font-size:1.3em;">Agents that <span class="green">detect</span>, <span class="cyan">diagnose</span>, <span class="purple">fix</span>, and <span class="orange">learn</span></p>
+        <p class="muted">— without waking you up at 3am.</p>
+        <br>
+        <svg viewBox="0 0 700 60" style="max-width:650px; margin:0 auto; display:block;">
+            <defs><marker id="arr5" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#22C55E"/></marker></defs>
+            <rect x="0" y="15" width="100" height="30" rx="6" fill="rgba(34,197,94,0.15)" stroke="#22C55E" stroke-width="1"/>
+            <text x="50" y="35" text-anchor="middle" fill="#F8FAFC" font-family="DM Sans" font-size="10">Detect</text>
+            <line x1="100" y1="30" x2="130" y2="30" stroke="#22C55E" stroke-width="1.5" marker-end="url(#arr5)"/>
+
+            <rect x="135" y="15" width="100" height="30" rx="6" fill="rgba(6,182,212,0.12)" stroke="#06B6D4" stroke-width="1"/>
+            <text x="185" y="35" text-anchor="middle" fill="#F8FAFC" font-family="DM Sans" font-size="10">Read Logs</text>
+            <line x1="235" y1="30" x2="265" y2="30" stroke="#22C55E" stroke-width="1.5" marker-end="url(#arr5)"/>
+
+            <rect x="270" y="15" width="100" height="30" rx="6" fill="rgba(139,92,246,0.12)" stroke="#8B5CF6" stroke-width="1"/>
+            <text x="320" y="35" text-anchor="middle" fill="#F8FAFC" font-family="DM Sans" font-size="10">Root Cause</text>
+            <line x1="370" y1="30" x2="400" y2="30" stroke="#22C55E" stroke-width="1.5" marker-end="url(#arr5)"/>
+
+            <rect x="405" y="15" width="100" height="30" rx="6" fill="rgba(249,115,22,0.12)" stroke="#F97316" stroke-width="1"/>
+            <text x="455" y="35" text-anchor="middle" fill="#F8FAFC" font-family="DM Sans" font-size="10">Apply Fix</text>
+            <line x1="505" y1="30" x2="535" y2="30" stroke="#22C55E" stroke-width="1.5" marker-end="url(#arr5)"/>
+
+            <rect x="540" y="15" width="100" height="30" rx="6" fill="rgba(34,197,94,0.12)" stroke="#22C55E" stroke-width="1"/>
+            <text x="590" y="35" text-anchor="middle" fill="#F8FAFC" font-family="DM Sans" font-size="10">Verify & Learn</text>
+        </svg>
+        <br>
+        <p class="small muted">Today we'll build every piece of this system from scratch.</p>
+    </section>
+
+    <!-- 4: LLM vs Agentic AI -->
+    <section>
+        <h2>LLM vs <span class="gradient-text">Agentic AI</span></h2>
+        <br>
+        <table class="vs-table">
+            <tr><th></th><th>LLM (ChatGPT)</th><th>Agentic AI</th></tr>
+            <tr><td>Interaction</td><td>Single prompt → response</td><td>Autonomous loop until task done</td></tr>
+            <tr><td>Tools</td><td>None (just text)</td><td>Reads files, runs code, calls APIs</td></tr>
+            <tr><td>Memory</td><td>Per-conversation only</td><td>Persists across sessions</td></tr>
+            <tr><td>Decisions</td><td>You decide next step</td><td>Agent decides next step</td></tr>
+            <tr><td>Collaboration</td><td>One model</td><td>Multiple agents coordinating</td></tr>
+        </table>
+        <br>
+        <p class="small muted">An agent is an LLM + tools + a loop + memory. It acts, not just responds.</p>
+    </section>
+
+    <!-- 5: The Agent Loop -->
+    <section>
+        <h2>The Agent Loop</h2>
+        <br>
+        <svg viewBox="0 0 500 420" style="max-width:420px; margin:0 auto; display:block;">
+            <defs>
+                <marker id="arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#22C55E"/></marker>
+                <marker id="arrow-cyan" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#06B6D4"/></marker>
+            </defs>
+            <!-- Boxes -->
+            <rect x="160" y="10" width="180" height="36" rx="8" fill="rgba(34,197,94,0.15)" stroke="#22C55E" stroke-width="1.5"/>
+            <text x="250" y="34" text-anchor="middle" fill="#F8FAFC" font-family="DM Sans" font-size="14">User Message</text>
+
+            <rect x="160" y="76" width="180" height="36" rx="8" fill="rgba(139,92,246,0.12)" stroke="#8B5CF6" stroke-width="1.5"/>
+            <text x="250" y="100" text-anchor="middle" fill="#F8FAFC" font-family="DM Sans" font-size="14">LLM Thinks</text>
+
+            <rect x="160" y="142" width="180" height="36" rx="8" fill="rgba(6,182,212,0.12)" stroke="#06B6D4" stroke-width="1.5"/>
+            <text x="250" y="166" text-anchor="middle" fill="#F8FAFC" font-family="DM Sans" font-size="14">Picks a Tool</text>
+
+            <rect x="160" y="208" width="180" height="36" rx="8" fill="rgba(249,115,22,0.12)" stroke="#F97316" stroke-width="1.5"/>
+            <text x="250" y="232" text-anchor="middle" fill="#F8FAFC" font-family="DM Sans" font-size="14">Executes Tool</text>
+
+            <rect x="160" y="274" width="180" height="36" rx="8" fill="rgba(34,197,94,0.12)" stroke="#22C55E" stroke-width="1.5"/>
+            <text x="250" y="298" text-anchor="middle" fill="#F8FAFC" font-family="DM Sans" font-size="14">Observes Result</text>
+
+            <rect x="160" y="350" width="180" height="36" rx="8" fill="rgba(255,255,255,0.05)" stroke="#94A3B8" stroke-width="1.5"/>
+            <text x="250" y="374" text-anchor="middle" fill="#F8FAFC" font-family="DM Sans" font-size="14">Final Response</text>
+
+            <!-- Arrows down -->
+            <line x1="250" y1="46" x2="250" y2="76" stroke="#22C55E" stroke-width="2" marker-end="url(#arrow)"/>
+            <line x1="250" y1="112" x2="250" y2="142" stroke="#22C55E" stroke-width="2" marker-end="url(#arrow)"/>
+            <line x1="250" y1="178" x2="250" y2="208" stroke="#22C55E" stroke-width="2" marker-end="url(#arrow)"/>
+            <line x1="250" y1="244" x2="250" y2="274" stroke="#22C55E" stroke-width="2" marker-end="url(#arrow)"/>
+
+            <!-- Loop arrow (right side going back up) -->
+            <path d="M340,292 C400,292 400,94 340,94" fill="none" stroke="#06B6D4" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrow-cyan)"/>
+            <text x="410" y="196" fill="#06B6D4" font-family="DM Sans" font-size="11" text-anchor="middle">Loop</text>
+
+            <!-- Down to final -->
+            <line x1="250" y1="310" x2="250" y2="350" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)"/>
+            <text x="220" y="336" fill="#94A3B8" font-family="DM Sans" font-size="10">Done</text>
+        </svg>
+        <p class="lab-ref">Lab 01: You build this loop from scratch</p>
+    </section>
+
+    <!-- 6: Frameworks -->
+    <section>
+        <h2>The Framework Landscape</h2>
+        <br>
+        <table class="vs-table">
+            <tr><th>Framework</th><th>By</th><th>Strength</th><th>Weakness</th></tr>
+            <tr><td class="green">LangChain</td><td>LangChain Inc</td><td>Ecosystem, chains, RAG</td><td>Complex abstractions, heavy</td></tr>
+            <tr><td class="cyan">LangGraph</td><td>LangChain Inc</td><td>Stateful graphs, cycles</td><td>Steep learning curve</td></tr>
+            <tr><td class="purple">CrewAI</td><td>Community</td><td>Multi-agent roles</td><td>Less flexible routing</td></tr>
+            <tr><td class="orange">Strands Agents</td><td>AWS</td><td>Simple, model-agnostic, production</td><td>Newer ecosystem</td></tr>
+        </table>
+        <br>
+        <p class="small">We use <span class="orange">Strands Agents SDK</span> — minimal boilerplate, swappable models, built for production.</p>
+    </section>
+
+    <!-- 7: Why Strands -->
+    <section>
+        <h2>Why <span class="orange">Strands Agents</span></h2>
+        <br>
+        <div class="code">
+from strands import Agent
+from strands_tools import file_read, shell
+
+agent = Agent(
+    model=AnthropicModel("claude-haiku-4-5"),
+    tools=[file_read, shell],
+    system_prompt="You are a DevOps assistant."
+)
+
+result = agent("Find and fix the failing service")
+        </div>
+        <br>
+        <div class="three-col">
+            <div class="card"><h3 class="green small">Simple</h3><p class="small muted">Agent in 5 lines</p></div>
+            <div class="card"><h3 class="cyan small">Flexible</h3><p class="small muted">Swap Ollama/Claude/Bedrock</p></div>
+            <div class="card"><h3 class="purple small">Production</h3><p class="small muted">Sessions, OTEL, multi-agent</p></div>
+        </div>
+    </section>
+
+    <!-- 8: What Is a Tool -->
+    <section>
+        <h2>What Is a <span class="green">Tool</span>?</h2>
+        <br>
+        <p class="subtitle">A function the LLM can call. The agent decides when to use it.</p>
+        <br>
+        <div class="two-col">
+            <div class="code">
+# Built-in tools (strands_tools)
+file_read, file_write, shell,
+http_request, calculator,
+current_time, editor
+            </div>
+            <div class="code">
+# Custom tool
+from strands import tool
+
+@tool
+def check_service(name: str):
+    """Check if a service is healthy"""
+    result = subprocess.run(
+        ["systemctl", "status", name],
+        capture_output=True
+    )
+    return result.stdout
+            </div>
+        </div>
+        <p class="lab-ref">Lab 01: file_read, file_write, shell, http_request</p>
+    </section>
+
+    <!-- 9: What Is MCP -->
+    <section>
+        <h2>What Is <span class="cyan">MCP</span>?</h2>
+        <p class="subtitle">Model Context Protocol — a universal tool standard</p>
+        <br>
+        <svg viewBox="0 0 600 220" style="max-width:550px; margin:0 auto; display:block;">
+            <defs>
+                <marker id="arr2" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#06B6D4"/></marker>
+            </defs>
+            <rect x="30" y="70" width="140" height="60" rx="10" fill="rgba(139,92,246,0.12)" stroke="#8B5CF6" stroke-width="1.5"/>
+            <text x="100" y="105" text-anchor="middle" fill="#F8FAFC" font-family="DM Sans" font-size="15" font-weight="600">Agent</text>
+
+            <rect x="400" y="70" width="160" height="60" rx="10" fill="rgba(34,197,94,0.12)" stroke="#22C55E" stroke-width="1.5"/>
+            <text x="480" y="100" text-anchor="middle" fill="#F8FAFC" font-family="DM Sans" font-size="15" font-weight="600">MCP Server</text>
+            <text x="480" y="118" text-anchor="middle" fill="#94A3B8" font-family="DM Sans" font-size="11">(any tool)</text>
+
+            <line x1="170" y1="95" x2="395" y2="95" stroke="#06B6D4" stroke-width="2" marker-end="url(#arr2)"/>
+            <line x1="395" y1="108" x2="170" y2="108" stroke="#06B6D4" stroke-width="2" marker-end="url(#arr2)"/>
+            <text x="280" y="85" text-anchor="middle" fill="#06B6D4" font-family="JetBrains Mono" font-size="10">JSON-RPC / stdio</text>
+
+            <text x="480" y="160" text-anchor="middle" fill="#94A3B8" font-family="DM Sans" font-size="11">Web Search • Database • Slack</text>
+            <text x="480" y="178" text-anchor="middle" fill="#94A3B8" font-family="DM Sans" font-size="11">GitHub • Custom APIs</text>
+        </svg>
+        <br>
+        <ul class="left">
+            <li>Tools as external servers — language agnostic</li>
+            <li>Agent discovers tools dynamically at runtime</li>
+            <li>One protocol, infinite integrations</li>
+        </ul>
+        <p class="lab-ref">Lab 01 (07_web_fetch): MCP web search server</p>
+    </section>
+
+    <!-- 10: Human-in-the-Loop -->
+    <section>
+        <h2>What Is <span class="purple">HITL</span>?</h2>
+        <p class="subtitle">Human-in-the-Loop — safety before dangerous actions</p>
+        <br>
+        <div class="code">
+from strands.agent.conversation_manager import SlidingWindowConversationManager
+from strands.handlers.tool_handler import HumanInTheLoop
+
+agent = Agent(
+    tools=[file_read, file_write, shell],
+    callback_handler=callback_handler,
+    # Ask human before write/shell operations
+    tool_handler=HumanInTheLoop(allowed_tools=["file_read"])
+)
+        </div>
+        <br>
+        <div class="two-col">
+            <div class="card"><h3 class="green small">Allowed</h3><p class="small muted">file_read executes freely</p></div>
+            <div class="card"><h3 class="orange small">Requires Approval</h3><p class="small muted">file_write, shell ask the user first</p></div>
+        </div>
+        <p class="lab-ref">Lab 01: All write operations use HITL</p>
+    </section>
+
+    <!-- 11: Stateful Agents -->
+    <section>
+        <h2><span class="gradient-text">Stateful Agents</span></h2>
+        <p class="subtitle">Memory that survives restarts</p>
+        <br>
+        <div class="two-col">
+            <div class="code">
+# Session persistence
+from strands.session import FileSessionManager
+
+agent = Agent(
+    session_manager=FileSessionManager(
+        session_id="user-123",
+        storage_dir="./sessions"
+    )
+)
+# Conversation history persists!
+            </div>
+            <div class="code">
+# Key-value state
+from strands import tool
+from strands.types.tools import ToolContext
+
+@tool(context=True)
+def save_note(context: ToolContext,
+              key: str, value: str):
+    """Save a note to memory"""
+    context.state[key] = value
+    return f"Saved: {key}"
+            </div>
+        </div>
+        <br>
+        <p class="small muted">Sessions = conversation history. State = structured key-value data. Both persist.</p>
+        <p class="lab-ref">Lab 02: Notes, todos, preferences, multi-user isolation</p>
+    </section>
+
+    <!-- 12: Agent as Tool -->
+    <section>
+        <h2><span class="green">Agent as Tool</span></h2>
+        <p class="subtitle">One coordinator delegates to specialist sub-agents</p>
+        <br>
+        <div class="code">
+researcher = Agent(system_prompt="You research topics deeply", name="researcher")
+writer = Agent(system_prompt="You write polished content", name="writer")
+
+# Coordinator uses sub-agents as tools
+coordinator = Agent(
+    system_prompt="You manage projects. Delegate research and writing.",
+    tools=[researcher, writer, file_read, file_write]
+)
+
+coordinator("Write a blog post about AI agents")
+# → Calls researcher tool → Gets research
+# → Calls writer tool → Gets draft
+# → Saves to file
+        </div>
+        <p class="lab-ref">Lab 03: Tech planner, email writer, sprint planner, coding assistant (8 files)</p>
+    </section>
+
+    <!-- 13: Workflow Pattern -->
+    <section>
+        <h2>Pattern: <span class="green">Sequential Workflow</span></h2>
+        <p class="subtitle">Pipeline — output of one feeds into the next</p>
+        <br>
+        <div class="code">
+researcher = Agent(system_prompt="Research...", callback_handler=None)
+writer = Agent(system_prompt="Write...", callback_handler=None)
+editor = Agent(system_prompt="Edit...", callback_handler=None)
+
+def publish_blog(topic):
+    research = researcher(f"Research {topic}")
+    draft = writer(f"Write article using: {research.message}")
+    final = editor(f"Polish this: {draft.message}")
+    return final.message
+        </div>
+        <br>
+        <p class="flow">Research → Write → Edit → Publish</p>
+        <p class="lab-ref">Lab 04 (01_blog_publisher, 02_resume_screener)</p>
+    </section>
+
+    <!-- 14: Graph Pattern -->
+    <section>
+        <h2>Pattern: <span class="cyan">Graph Routing</span></h2>
+        <p class="subtitle">Conditional edges — route based on state</p>
+        <br>
+        <div class="code">
+from strands.multiagent import GraphBuilder
+
+builder = GraphBuilder()
+builder.add_node(analyzer_agent, "analyze")
+builder.add_node(fixer_agent, "fix")
+builder.add_node(approver_agent, "approve")
+
+builder.set_entry_point("analyze")
+builder.add_edge("analyze", "fix", condition=lambda state: "bug" in state)
+builder.add_edge("analyze", "approve", condition=lambda state: "clean" in state)
+builder.add_edge("fix", "approve")
+
+graph = builder.build()
+graph("Review this code: ...")
+        </div>
+        <br>
+        <p class="flow">Analyze →[bug?]→ Fix → Approve | Analyze →[clean?]→ Approve</p>
+        <p class="lab-ref">Lab 04 (03_code_reviewer, 04_customer_triage)</p>
+    </section>
+
+    <!-- 15: Swarm Pattern -->
+    <section>
+        <h2>Pattern: <span class="purple">Swarm</span></h2>
+        <p class="subtitle">Autonomous handoffs — agents decide who speaks next</p>
+        <br>
+        <div class="code">
+from strands.multiagent import Swarm
+
+greeter = Agent(system_prompt="Greet and classify the request...")
+billing = Agent(system_prompt="Handle billing questions...")
+support = Agent(system_prompt="Handle technical support...")
+escalation = Agent(system_prompt="Handle escalations to humans...")
+
+swarm = Swarm(
+    [greeter, billing, support, escalation],
+    entry_point=greeter,
+    max_handoffs=6
+)
+
+swarm("I was double-charged on my last invoice")
+# greeter → billing (autonomous handoff)
+        </div>
+        <p class="lab-ref">Lab 04 (05_call_center_swarm)</p>
+    </section>
+
+    <!-- 16: All Patterns Summary -->
+    <section>
+        <h2>Multi-Agent Patterns</h2>
+        <br>
+        <div class="three-col">
+            <div class="card">
+                <h3 class="green">Sequential</h3>
+                <p class="small muted">A → B → C</p>
+                <p class="small">Fixed pipeline. Output feeds forward.</p>
+                <p class="small">Use: ETL, content pipelines</p>
+            </div>
+            <div class="card">
+                <h3 class="cyan">Graph</h3>
+                <p class="small muted">A → [condition] → B or C</p>
+                <p class="small">Conditional routing. Cycles allowed.</p>
+                <p class="small">Use: Review loops, triage</p>
+            </div>
+            <div class="card">
+                <h3 class="purple">Swarm</h3>
+                <p class="small muted">A ↔ B ↔ C (autonomous)</p>
+                <p class="small">Agents hand off to each other.</p>
+                <p class="small">Use: Support, dynamic routing</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 17: Observability -->
+    <section>
+        <h2><span class="gradient-text">Observability</span></h2>
+        <p class="subtitle">See inside your agents — every decision, every tool call</p>
+        <br>
+        <div class="two-col">
+            <div class="card">
+                <h3 class="green small">What Langfuse Captures</h3>
+                <ul>
+                    <li>Every LLM call (tokens, latency)</li>
+                    <li>Every tool execution</li>
+                    <li>Full trace tree</li>
+                    <li>Cost per request</li>
+                    <li>Error rates</li>
+                </ul>
+            </div>
+            <div class="code">
+# Zero code changes needed!
+# shared/__init__.py auto-inits:
+
+import os
+if os.getenv("LANGFUSE_PUBLIC_KEY"):
+    from langfuse import get_client
+    _langfuse = get_client()
+
+# Strands emits OTEL spans
+# Langfuse captures them
+# Every lab traces automatically
+            </div>
+        </div>
+        <p class="lab-ref">Lab 05: All labs auto-trace to http://localhost:3000</p>
+    </section>
+
+    <!-- 18: Self-Healing Architecture -->
+    <section>
+        <h2>Putting It Together: <span class="gradient-text">Self-Healing</span></h2>
+        <br>
+        <svg viewBox="0 0 700 280" style="max-width:650px; margin:0 auto; display:block;">
+            <defs>
+                <marker id="arr3" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#22C55E"/></marker>
+                <marker id="arr4" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#06B6D4"/></marker>
+            </defs>
+            <!-- Agent boxes -->
+            <rect x="30" y="40" width="150" height="70" rx="10" fill="rgba(34,197,94,0.12)" stroke="#22C55E" stroke-width="1.5"/>
+            <text x="105" y="68" text-anchor="middle" fill="#22C55E" font-family="Space Grotesk" font-size="13" font-weight="600">Monitor Agent</text>
+            <text x="105" y="88" text-anchor="middle" fill="#94A3B8" font-family="DM Sans" font-size="10">CloudWatch, http_request</text>
+
+            <rect x="240" y="40" width="150" height="70" rx="10" fill="rgba(6,182,212,0.12)" stroke="#06B6D4" stroke-width="1.5"/>
+            <text x="315" y="68" text-anchor="middle" fill="#06B6D4" font-family="Space Grotesk" font-size="13" font-weight="600">Diagnose Agent</text>
+            <text x="315" y="88" text-anchor="middle" fill="#94A3B8" font-family="DM Sans" font-size="10">log_reader, trace_analyzer</text>
+
+            <rect x="450" y="40" width="150" height="70" rx="10" fill="rgba(249,115,22,0.12)" stroke="#F97316" stroke-width="1.5"/>
+            <text x="525" y="68" text-anchor="middle" fill="#F97316" font-family="Space Grotesk" font-size="13" font-weight="600">Remediate Agent</text>
+            <text x="525" y="88" text-anchor="middle" fill="#94A3B8" font-family="DM Sans" font-size="10">shell, rollback, scale</text>
+
+            <!-- Arrows -->
+            <line x1="180" y1="75" x2="235" y2="75" stroke="#22C55E" stroke-width="2" marker-end="url(#arr3)"/>
+            <line x1="390" y1="75" x2="445" y2="75" stroke="#06B6D4" stroke-width="2" marker-end="url(#arr4)"/>
+
+            <!-- Memory bar -->
+            <rect x="30" y="150" width="570" height="40" rx="8" fill="rgba(139,92,246,0.08)" stroke="#8B5CF6" stroke-width="1" stroke-dasharray="4,3"/>
+            <text x="315" y="175" text-anchor="middle" fill="#8B5CF6" font-family="DM Sans" font-size="12">Session Memory — what worked last time?</text>
+
+            <!-- Observability bar -->
+            <rect x="30" y="210" width="570" height="40" rx="8" fill="rgba(249,115,22,0.08)" stroke="#F97316" stroke-width="1" stroke-dasharray="4,3"/>
+            <text x="315" y="235" text-anchor="middle" fill="#F97316" font-family="DM Sans" font-size="12">Langfuse — full trace of every decision</text>
+        </svg>
+        <br>
+        <p class="small muted">Graph pattern: Monitor → [issue?] → Diagnose → [known fix?] → Apply → Verify</p>
+    </section>
+
+    <!-- 19: Self-Learning Architecture -->
+    <section>
+        <h2>Putting It Together: <span class="gradient-text">Self-Learning</span></h2>
+        <br>
+        <div class="two-col">
+            <div class="card">
+                <h3 class="purple small">How It Learns</h3>
+                <ul>
+                    <li>Session memory persists solutions</li>
+                    <li>State tracks: what fix worked for what symptom</li>
+                    <li>Next incident → agent searches past fixes first</li>
+                    <li>Langfuse traces show success/failure patterns</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3 class="green small">The Loop</h3>
+                <p class="flow" style="font-size:0.6em;">
+                    Incident #1 → Diagnose → Try → Fail → Try → Fix ✓<br><br>
+                    Incident #2 (same) → Remember → Apply known fix ✓<br><br>
+                    Result: Faster resolution over time
+                </p>
+            </div>
+        </div>
+        <br>
+        <p class="small muted">Stateful agents (Lab 02) + Multi-agent (Lab 04) + Observability (Lab 05) = Self-learning system</p>
+    </section>
+
+    <!-- 20: Lab Map -->
+    <section>
+        <h2>Lab Roadmap</h2>
+        <br>
+        <div class="left" style="font-size:0.75em;">
+            <p><span class="tag tag-green">Lab 01</span> <strong>First Agent</strong> — Agent loop, tools, HITL, MCP <span class="muted">(7 files)</span></p>
+            <p><span class="tag tag-green">Lab 02</span> <strong>Stateful Agent</strong> — Sessions, state, multi-user memory <span class="muted">(6 files)</span></p>
+            <p><span class="tag tag-cyan">Lab 03</span> <strong>Agents as Tools</strong> — Sub-agents, coordinator pattern, coding assistant <span class="muted">(8 files)</span></p>
+            <p><span class="tag tag-purple">Lab 04</span> <strong>Multi-Agent</strong> — Sequential workflow, Graph, Swarm <span class="muted">(5 files)</span></p>
+            <p><span class="tag tag-orange">Lab 05</span> <strong>Observability</strong> — Langfuse + OTEL, zero-code tracing <span class="muted">(auto)</span></p>
+        </div>
+        <br>
+        <p class="small muted">Each lab builds on the previous. By the end you have every building block for self-healing agents.</p>
+    </section>
+
+    <!-- 21: Live Demo -->
+    <section>
+        <h2>Demo Time</h2>
+        <br>
+        <div class="code">
+$ python3 lab_03_agents_as_tools/08_coding_assistant.py
+
+> Find the bug in server.py and fix it
+
+│ Let me analyze the code...
+● file_read — reading server.py
+│ I found a null pointer on line 42.
+● file_write — patching the null check
+● shell — running pytest
+│ All 12 tests pass. The bug is fixed.
+
+────────────────────────────────────────
+        </div>
+        <br>
+        <p class="small muted">A Claude Code-like CLI. Built with Strands in ~50 lines.</p>
+    </section>
+
+    <!-- 22: Get Started -->
+    <section>
+        <h2>Try It Now</h2>
+        <br>
+        <div class="code">
+git clone https://github.com/SyedUmerHasan/ai-summit-labs.git
+cd ai-summit-labs
+docker compose up -d
+python3 -m venv .venv && source .venv/bin/activate
+pip install -e . && pip install -r requirements.txt
+
+# Run your first agent
+python3 lab_01_first_agent/01_basic_agent.py
+        </div>
+        <br>
+        <p><span class="tag tag-green">github.com/SyedUmerHasan/ai-summit-labs</span></p>
+        <p><span class="tag tag-cyan">syedumerhasan.dev</span></p>
+        <p><span class="tag tag-purple">strandsagents.com</span></p>
+    </section>
+
+    <!-- 23: Thank You -->
+    <section>
+        <h1 class="gradient-text">Thank You</h1>
+        <br>
+        <p>Syed Umer Hasan</p>
+        <p class="small muted">SysDE @ Amazon | IEEE Senior Member | AWS Book Author</p>
+        <br>
+        <p class="small">LinkedIn: <span class="cyan">linkedin.com/in/syedumerhasan</span></p>
+        <p class="small">GitHub: <span class="green">github.com/SyedUmerHasan</span></p>
+        <p class="small">Website: <span class="purple">syedumerhasan.dev</span></p>
+    </section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.min.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        transition: 'slide',
+        backgroundTransition: 'fade',
+        controls: true,
+        progress: true,
+        center: true,
+        width: 1280,
+        height: 720,
+    });
+</script>
+</body>
+</html>

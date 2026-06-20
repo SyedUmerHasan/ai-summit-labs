@@ -4,7 +4,7 @@
 - Auto-tracing with Langfuse + OpenTelemetry
 - Every agent call, tool use, and model request captured automatically
 - View traces, latency, token usage in the Langfuse dashboard
-
+can you 
 ## Prerequisites
 
 ```bash
